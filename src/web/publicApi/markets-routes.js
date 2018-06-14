@@ -6,7 +6,7 @@ const addCacheHeader = require('../helpers/addCacheHeader')
 const DEFAULT_PAGE_SIZE = 10
 const DEFAULT_MAX_PAGE_SIZE = 50
 
-function createRoutes ({ dxInfoService },
+function createRoutes ({ dxInfoService, dxTradeService },
   { short: CACHE_TIMEOUT_SHORT,
     average: CACHE_TIMEOUT_AVERAGE,
     long: CACHE_TIMEOUT_LONG
@@ -137,6 +137,31 @@ function createRoutes ({ dxInfoService },
       let tokenPair = _tokenPairSplit(req.params.tokenPair)
       addCacheHeader({ res, time: CACHE_TIMEOUT_SHORT })
       return dxInfoService.getBuyVolume(tokenPair)
+    }
+  })
+
+  routes.push({
+    path: '/sell',
+    post (req, res) {
+      let amount = req.body.amount
+      let auctionIndex = req.body.auctionIndex
+      let accountAddress = req.body.accountAddress
+      let {sellToken, buyToken} = _tokenPairSplit(req.body.tokenPair)
+      addCacheHeader({ res, time: CACHE_TIMEOUT_SHORT })
+
+      dxTradeService.sell({
+        sellToken,
+        buyToken,
+        auctionIndex,
+        amount: amount * 1e18,
+        from: accountAddress
+      })
+        .then(data => {
+          res.send(data)
+        })
+        .catch(err => {
+          res.send('Failed' + err)
+        })
     }
   })
 

@@ -2,6 +2,7 @@ const info = require('debug')('INFO-dx-service:Server')
 const express = require('express')
 const http = require('http')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 const { requestErrorHandler } = require('./requestErrorHandler')
 
 // Constants
@@ -40,6 +41,9 @@ class Server {
       res.setHeader('X-Powered-By', this._poweredByHeader)
       next()
     })
+
+    // enable body parsing
+    app.use(bodyParser.json())
 
     // Register all routes
     if (this._registerRoutes) {
