@@ -165,6 +165,28 @@ function createRoutes ({ dxInfoService, dxTradeService },
     }
   })
 
+  routes.push({
+    path: '/deposit',
+    post (req, res) {
+      let amount = req.body.amount
+      let token = req.body.token
+      let accountAddress = req.body.accountAddress
+      addCacheHeader({ res, time: CACHE_TIMEOUT_SHORT })
+
+      dxTradeService.sell({
+        amount,
+        token,
+        accountAddress
+      })
+        .then(data => {
+          res.send(data)
+        })
+        .catch(err => {
+          res.send('Failed' + err)
+        })
+    }
+  })
+
   return routes
 }
 
