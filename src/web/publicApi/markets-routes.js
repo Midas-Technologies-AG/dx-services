@@ -173,7 +173,7 @@ function createRoutes ({ dxInfoService, dxTradeService },
       let accountAddress = req.body.accountAddress
       addCacheHeader({ res, time: CACHE_TIMEOUT_SHORT })
 
-      dxTradeService.sell({
+      dxTradeService.deposit({
         amount,
         token,
         accountAddress
