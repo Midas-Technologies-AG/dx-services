@@ -105,15 +105,15 @@ class App {
     logger.info(message)
 
     if (this._slackClient.isEnabled()) {
-      await this._slackClient.postMessage({
-        channel: this._config.SLACK_CHANNEL_OPERATIONS,
-        text: message
-      }).catch(error => {
-        logger.error({
-          msg: 'Error notifing API start to Slack: ' + error.toString(),
-          error
-        })
-      })
+      // await this._slackClient.postMessage({
+      //   channel: this._config.SLACK_CHANNEL_OPERATIONS,
+      //   text: message
+      // }).catch(error => {
+      //   logger.error({
+      //     msg: 'Error notifing API start to Slack: ' + error.toString(),
+      //     error
+      //   })
+      // })
     }
   }
 
@@ -125,15 +125,15 @@ class App {
     logger.info(message)
 
     if (this._slackClient.isEnabled()) {
-      await this._slackClient.postMessage({
-        channel: this._config.SLACK_CHANNEL_OPERATIONS,
-        text: message
-      }).catch(error => {
-        logger.error({
-          msg: 'Error notifing API stop to Slack: ' + error.toString(),
-          error
-        })
-      })
+      // await this._slackClient.postMessage({
+      //   channel: this._config.SLACK_CHANNEL_OPERATIONS,
+      //   text: message
+      // }).catch(error => {
+      //   logger.error({
+      //     msg: 'Error notifing API stop to Slack: ' + error.toString(),
+      //     error
+      //   })
+      // })
     }
   }
 }
